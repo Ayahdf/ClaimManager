@@ -23,21 +23,20 @@
         </div>
     </div></nav>
 <div class="container mt-4">
-    <div class="card-header mb-3 text-center"> Formulaire d'ajout de reclamations</div>
-    <div class="card-body">
-        <form action="/ajouterReclamation" method="post">
-            <div class="mb-3">
-                <label for="titreReclamation" class="form-label">Titre Reclamation</label>
-                <input type="text" class="form-control" id="titreReclamation" name="titre" required>
-            </div>
-            <div class="mb-3">
-                <label for="descriptionReclamation" class="form-label">Description</label>
-                <input type="text" class="form-control" id="descriptionReclamation" name="description" required>
-            </div>
-
-            <button type="submit" class="btn btn-primary">Ajouter</button>
-
-        </form>
+    <div class="card">
+        <div class="card-header">
+            Ajouter un commentaire
+        </div>
+        <div class="card-body">
+            <form th:action="@{/ajouterCommentaire/{id}(id=${produit.idProduit})}" th:object="${commentaire}" method="post">
+                <div class="mb-3">
+                    <input type="hidden" name="idProduit" value="${commentaire.produit.idProduit}">
+                    <label for="texte" class="form-label">Commentaire</label>
+                    <textarea class="form-control" id="texte" th:field="*{contenu}" rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Ajouter</button>
+            </form>
+        </div>
     </div>
 </div>
 </body>

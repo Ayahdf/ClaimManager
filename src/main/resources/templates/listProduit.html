@@ -1,10 +1,75 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/5.3.3/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-$END$
+<nav class="navbar navbar-light" style="background-color: #0dcaf0;">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">Gestion des reclamations</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-link active" aria-current="page" href="/">Home</a>
+                <a class="nav-link" href="/listProduits">Produits</a>
+                <a class="nav-link" href="/listeReclamations">Mes reclamations</a>
+            </div>
+        </div>
+    </div></nav>
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header">
+            Liste des produits
+            <a href="/ajouterProduit" class="btn btn-outline-info float-end">Ajouter un produit</a>
+        </div>
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Nom</th>
+                    <th>Description</th>
+                    <th>Action</th>
+                    <th>Souhaitez vous</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="p:${listProduits}">
+                    <td th:text="${p.idProduit}"></td>
+                    <td th:text="${p.nom}"></td>
+                    <td th:text="${p.description}"></td>
+                    <td>
+                        <a th:href="@{'/modifierProduit/' + ${p.idProduit}}" class="btn btn-outline-dark">Modifier</a>
+                        <a th:href="@{'/deleteProduit/' + ${p.idProduit}}" class="btn btn-outline-danger">Supprimer</a>
+                        <a th:href="@{'/commentaires/' + ${p.idProduit}}" class="btn btn-outline-info">Commentaire</a>
+                    </td>
+                    <td>
+                        <a th:href="@{'/reclamer/' + ${p.idProduit}}" class="btn btn-dark">Reclamer</a>
+                        <a th:href="@{'/listeReclamations/' + ${p.idProduit}}" class="btn btn-secondary">Liste des réclamations</a>
+
+                    </td>
+
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+</div>
+<div class="container">
+    <ul class=" nav nav-pille">
+        <li class=" nav nav-item me-2" th:each="p,stat : ${pages}">
+            <a th:class="${stat.index == currentpages} ? 'btn btn-primary' : 'btn btn-outlines-primary'"
+               th:href="@{listProduits(page=${stat.index})}" th:text="${stat.index}"></a>
+        </li>
+    </ul>
+</div>
 </body>
 </html>

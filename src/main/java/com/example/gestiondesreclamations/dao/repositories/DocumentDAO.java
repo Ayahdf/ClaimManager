@@ -4,5 +4,5 @@ import com.example.gestiondesreclamations.dao.entities.Document;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 
-public interface DocumentInterface extends JpaRepository<Document, Long> {
+public interface DocumentDAO extends JpaRepository<Document, Long> {
 }

@@ -1,0 +1,1 @@
+INSERT INTO user_table (name, login, password, role) VALUES ('aya', 'aya@gmail.com', '123', 'ADMIN');

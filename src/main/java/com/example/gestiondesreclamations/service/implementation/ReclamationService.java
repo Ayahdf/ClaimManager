@@ -31,9 +31,9 @@ public class ReclamationService implements ReclamationManager {
 
     @Override
     public boolean supprimerReclamation(Reclamation reclamation) {
-       if (reclamation.getReclamationId() != null && reclamationDAO.existsById(reclamation.getReclamationId())) {
-             reclamationDAO.delete(reclamation);
-             return true;
+        if (reclamation.getReclamationId() != null && reclamationDAO.existsById(reclamation.getReclamationId())) {
+            reclamationDAO.delete(reclamation);
+            return true;
         }
         return false;
     }

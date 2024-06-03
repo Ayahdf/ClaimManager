@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Entity
@@ -15,10 +17,16 @@ import java.util.List;
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long roleId;
+    private Integer roleId;
     @Column(name = "nameRole")
     private String nom;
 
-//    @ManyToMany(mappedBy = "roles")
-//    private List<Utilisateur> utilisateurs;
+    @OneToMany(mappedBy = "role",fetch = FetchType.EAGER)
+    private Collection<Utilisateur> users = new ArrayList<>();
+
+    @Override
+    public String toString() {
+        return  nom ;
+    }
 }
+

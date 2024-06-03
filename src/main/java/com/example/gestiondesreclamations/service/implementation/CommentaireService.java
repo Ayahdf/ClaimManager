@@ -34,8 +34,8 @@ public class CommentaireService implements CommentaireManager {
     public boolean supprimerCommentaire(Commentaire commentaire) {
         if (commentaire != null && commentaire.getCommentaireId() != null && commentaireDAO.existsById(commentaire.getCommentaireId()))
         {
-             commentaireDAO.delete(commentaire);
-             return true;
+            commentaireDAO.delete(commentaire);
+            return true;
         }
         return false;
     }
@@ -53,5 +53,9 @@ public class CommentaireService implements CommentaireManager {
     @Override
     public List<Commentaire> getCommentairesByProduitId(Long produitId) {
         return commentaireDAO.findByProduitIdProduit(produitId);
+    }
+
+    public List<Commentaire> getAllCommentaires() {
+        return commentaireDAO.findAll();
     }
 }

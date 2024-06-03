@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Modifier une réclamation après-vente</title>
+    <!-- Les liens vers les CSS et les scripts JS nécessaires -->
+    <link rel="stylesheet" href="/webjars/bootstrap/5.3.3/css/bootstrap.min.css">
+    <!-- Ajoutez vos styles personnalisés ici si nécessaire -->
+</head>
+<body>
+<!-- La navigation et l'en-tête de la page -->
+<!-- Vous pouvez réutiliser la navigation et l'en-tête que vous avez déjà fournis -->
+<nav class="navbar navbar-light" style="background-color: #0dcaf0;">
+    <!-- Votre code de navigation -->
+</nav>
+
+<!-- La section principale de la page -->
+<div class="container">
+    <h1>Modifier une réclamation après-vente</h1>
+    <!-- Formulaire pour éditer une réclamation après-vente -->
+    <form action="/apresvente/{id}" method="post">
+        <!-- Utilisez les champs cachés pour envoyer l'ID de la réclamation -->
+        <input type="hidden" name="_method" value="PUT">
+        <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+        <div class="mb-3">
+            <label for="responsable" class="form-label">Responsable</label>
+            <input type="text" class="form-control" id="responsable" name="responsable" th:value="${serviceApresVente.responsable}">
+        </div>
+        <div class="mb-3">
+            <label for="numeroTelephone" class="form-label">Numéro de téléphone</label>
+            <input type="text" class="form-control" id="numeroTelephone" name="numeroTelephone" th:value="${serviceApresVente.numeroTelephone}">
+        </div>
+        <!-- Ajoutez d'autres champs du formulaire si nécessaire -->
+        <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
+    </form>
+</div>
+
+<!-- Les scripts JS nécessaires -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<<script src="/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+<!-- Ajoutez d'autres scripts personnalisés ici si nécessaire -->
+</body>
+</html>

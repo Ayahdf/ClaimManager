@@ -1,0 +1,24 @@
+<!-- editacceuil.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edit Service Acceuil</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-4">
+    <h2>Edit Service Acceuil</h2>
+    <form th:action="@{/acceuil/{id}(id=${id})}" method="post" th:object="${serviceAcceuil}">
+        <div class="form-group">
+            <label for="responsable">Responsable:</label>
+            <input type="text" class="form-control" id="responsable" th:field="${serviceAcceuil.responsable}" placeholder="Enter responsible">
+        </div>
+        <div class="form-group">
+            <label for="poste">Poste:</label>
+            <input type="text" class="form-control" id="poste" th:field="${serviceAcceuil.poste}" placeholder="Enter position">
+        </div>
+        <button type="submit" class="btn btn-primary">Update</button>
+    </form>
+</div>
+</body>
+</html>

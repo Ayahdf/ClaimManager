@@ -22,6 +22,15 @@ public class CommentaireController {
     @Autowired
     public ProduitService produitService;
 
+    @GetMapping("/commentaire")
+    public String listeCommentaire(Model model) {
+        List<Commentaire> listCommentaires = commentaireService.getAllCommentaires();
+//        List<Produit> produit = produitService.getAllProduits();
+//        model.addAttribute("produit", produit);
+        model.addAttribute("listCommentaires", listCommentaires);
+        return "listeCommentaire";
+    }
+
     @GetMapping("/commentaires/{idProduit}")
     public String listeCommentaires(@PathVariable Long idProduit, Model model) {
         Produit produit = produitService.getProduitById(idProduit);
@@ -43,19 +52,19 @@ public class CommentaireController {
 
 
 
-//    @PostMapping("/ajouterCommentaire")
+    //    @PostMapping("/ajouterCommentaire")
 //    public String ajouterCommentaire(@ModelAttribute("commentaire") Commentaire commentaire) {
 //        Produit produit = commentaire.getProduit();
 //        commentaireService.ajouterCommentaire(commentaire);
 //        return "redirect:/commentaires/" + produit.getIdProduit();
 //    }
-@PostMapping("/ajouterCommentaire/{produitId}")
-public String ajouterCommentaire(@ModelAttribute("commentaire") Commentaire commentaire, @PathVariable Long produitId) {
-    Produit produit = produitService.getProduitById(produitId);
-    commentaire.setProduit(produit);
-    commentaireService.ajouterCommentaire(commentaire);
-    return "redirect:/commentaires/" + produitId;
-}
+    @PostMapping("/ajouterCommentaire/{produitId}")
+    public String ajouterCommentaire(@ModelAttribute("commentaire") Commentaire commentaire, @PathVariable Long produitId) {
+        Produit produit = produitService.getProduitById(produitId);
+        commentaire.setProduit(produit);
+        commentaireService.ajouterCommentaire(commentaire);
+        return "redirect:/commentaires/" + produitId;
+    }
 
 //    @PostMapping("/ajouterCommentaire")
 //    public String ajouterCommentaire(@ModelAttribute("commentaire") Commentaire commentaire) {

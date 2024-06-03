@@ -17,7 +17,7 @@ public class Document {
     private String nom_fichier;
     @Column(name = "path")
     private String chemin;
-    @ManyToOne
-    private Reclamation reclamation;
+//    @ManyToOne
+//    private Reclamation reclamation;
 
 }

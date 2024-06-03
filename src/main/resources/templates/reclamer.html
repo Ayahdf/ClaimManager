@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Réclamer un Produit</title>
@@ -16,9 +17,12 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-                <a class="nav-link active" aria-current="page" href="/">Home</a>
+                <a class="nav-link active" aria-current="page" href="/">Accueil</a>
                 <a class="nav-link" href="/listProduits">Produits</a>
-                <a class="nav-link" href="/listeReclamations">Mes réclamations</a>
+                <a class="nav-link" href="listservice">Service</a>
+                <a sec:authorize="hasRole('admin')" class="nav-link" href="/user">Utilisateur</a>
+
+                <a sec:authorize="hasRole('admin')" class="nav-link" href="/listeReclamations">Liste réclamations</a>
             </div>
         </div>
     </div>

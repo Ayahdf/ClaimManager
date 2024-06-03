@@ -1,9 +1,13 @@
 package com.example.gestiondesreclamations.web;
 
 import com.example.gestiondesreclamations.dao.entities.Produit;
+import com.example.gestiondesreclamations.dao.entities.Utilisateur;
+import com.example.gestiondesreclamations.service.ProduitManager;
 import com.example.gestiondesreclamations.service.implementation.ProduitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,6 +21,8 @@ import java.util.Optional;
 public class ProduitController {
     @Autowired
     private ProduitService produitService;
+    @Autowired
+    private ProduitManager produitManager;
 
     @GetMapping("/")
     public String start()
@@ -27,11 +33,16 @@ public class ProduitController {
     @GetMapping("/listProduits")
     public String listProduits(Model model,
                                @RequestParam(name = "page", defaultValue = "0" ) int page,
-                               @RequestParam(name = "taille", defaultValue = "6" ) int taille)
+                               @RequestParam(name = "taille", defaultValue = "6" ) int taille,
+                               @RequestParam(name = "search", defaultValue = "") String keyword)
     {
-        Page<Produit> produits=produitService.listeProduit2(page,taille);
+        Pageable pageable = PageRequest.of(page, taille);
+        Page<Produit> produits = produitManager.getAllUser(keyword,pageable);
         model.addAttribute("listProduits",produits.getContent());
         int[] pages = new int[produits.getTotalPages()];
+        for (int i = 0; i < pages.length; i++) {
+            pages[i] = i;
+        }
         model.addAttribute("pages",pages);
         model.addAttribute("currentpages",page);
 
@@ -59,8 +70,8 @@ public class ProduitController {
     public String modifierProduit(Model model, @PathVariable long id) {
 
         Produit produit = produitService.getProduitById(id);
-            model.addAttribute("produit", produit);
-            return "modifierProduit"; // Redirige vers la vue pour modifier un produit spécifique
+        model.addAttribute("produit", produit);
+        return "modifierProduit"; // Redirige vers la vue pour modifier un produit spécifique
 
     }
 

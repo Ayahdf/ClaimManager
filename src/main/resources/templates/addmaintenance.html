@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ajouter une Maintenance</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/5.3.3/css/bootstrap.min.css">
+</head>
+<body>
+<nav class="navbar navbar-light" style="background-color: #0dcaf0;">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">Gestion des réclamations</a>
+        <div class="navbar-nav">
+            <a class="nav-link active" href="/">Accueil</a>
+            <a class="nav-link" href="/listProduits">Produits</a>
+            <a class="nav-link" href="/listeReclamations">Mes réclamations</a>
+            <a class="nav-link" href="/listemaintenance">Maintenances</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-5">
+    <h1 class="mb-4">Ajouter une Maintenance</h1>
+    <form action="/maintenance" method="post">
+        <div class="mb-3">
+            <label for="nom" class="form-label">Nom</label>
+            <input type="text" class="form-control" id="nom" name="nom" required>
+        </div>
+        <div class="mb-3">
+            <label for="responsable" class="form-label">Responsable</label>
+            <input type="text" class="form-control" id="responsable" name="responsable" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Ajouter</button>
+        <a href="/listemaintenance" class="btn btn-secondary">Annuler</a>
+    </form>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

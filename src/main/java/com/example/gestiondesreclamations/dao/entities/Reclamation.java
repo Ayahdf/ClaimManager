@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Collection;
 import java.util.List;
 
 @Entity
@@ -29,9 +28,11 @@ public class Reclamation {
     //association avec produit
     @ManyToOne
     private Produit produit;
+    @ManyToOne
+    private Service service;
 
-    @OneToMany(mappedBy = "reclamation", cascade = CascadeType.ALL)
-    private List<Document> documents;
+//    @OneToMany(mappedBy = "reclamation", cascade = CascadeType.ALL)
+//    private List<Document> documents;
 
 
 

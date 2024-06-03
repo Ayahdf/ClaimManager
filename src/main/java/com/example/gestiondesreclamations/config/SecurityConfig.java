@@ -28,16 +28,19 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable())
+
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/reclamer/", "/listeReclamations",
-                                "/modifierReclamation/", "/supprimerReclamation/", "/ajouterProduit/", "/deleteProduit/", "/listProduits/", "/modifierProduit/")
-                        .authenticated()
-                        .requestMatchers("/", "/webjars/**", "/ajouterCommentaire/")
+                        .requestMatchers( "/supprimerReclamation/","/listProduits/**","/commentaire","/commentaire/**"
+                                ,"/ajouterCommentaire/{idProduit}","/listProduits","/ajouterProduit","/modifierProduit/{id}","/deleteProduit/{id}",
+                                "/listeReclamations","/listeReclamation","/ajouterReclamation","/modifierReclamation/{id}","/supprimerReclamation/{id}",
+                                "/rolelist","/listeacceuil","acceuil","acceuil/**","/listeapresvente",
+                                "/apresvente","/apresvente/**","listservice","/listemaintenance","/maintenance","/maintenance/**",
+                                "/reclamation","/rec").authenticated()
+                        .requestMatchers("/" ,"/reclamer/**","/commentaires/**", "/login/**","/webjars/**","/user/new" ,"/user","user/**")
                         .permitAll())
                 .formLogin(form -> form
-                        .defaultSuccessUrl("/listeReclamations", true)) // Redirige vers /listeReclamations après une connexion réussie
-                .httpBasic(Customizer.withDefaults());
+                        .defaultSuccessUrl("/reclamation", true)) // Redirige vers /listeReclamations après une connexion réussie
+               ;
 
         return http.build();
     }

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Liste des Services d'Accueil</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/5.3.3/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+<nav class="navbar navbar-light" style="background-color: #0dcaf0;">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">Gestion des réclamations</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-link active" aria-current="page" href="/">Accueil</a>
+                <a class="nav-link" href="/listProduits">Produits</a>
+                <a class="nav-link" href="listservice">Service</a>
+                <a sec:authorize="hasRole('admin')" class="nav-link" href="/user">Utilisateur</a>
+
+                <a sec:authorize="hasRole('admin')" class="nav-link" href="/listeReclamations">Liste réclamations</a>
+            </div>
+        </div>
+    </div>
+</nav>
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header">
+            Liste des Services d'Accueil
+            <a sec:authorize="hasRole('user')" th:href="@{/apresvente/new}" class="btn btn-outline-info float-end">Si aucun champ ne vous convient ajoutez un</a>
+            <a sec:authorize="hasRole('admin')" th:href="@{/apresvente/new}" class="btn btn-outline-info float-end">Ajouter un nouveau</a>
+        </div>
+        <div class="card-body">
+            <table class="table">
+                <thead class="thead-dark">
+                <tr>
+                    <th sec:authorize="hasRole('admin')">ID</th>
+                    <th>Poste</th>
+                    <th>numero de telephone</th>
+                    <th sec:authorize="hasRole('admin')">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="serviceAcceuil : ${serviceAcceuils}">
+                    <td  sec:authorize="hasRole('admin')" th:text="${serviceAcceuil.id}"></td>
+                    <td th:text="${serviceAcceuil.responsable}"></td>
+                    <td th:text="${serviceAcceuil.numeroTelephone}"></td>
+                    <td sec:authorize="hasRole('admin')">
+                        <a  th:href="@{/acceuil/edit/{id}(id=${serviceAcceuil.id})}" class="btn btn-outline-success">Modifier</a>
+                        <a sec:authorize="hasRole('admin')" th:href="@{/acceuil/{id}(id=${serviceAcceuil.id})}" class="btn btn-outline-danger">Supprimer</a>
+                    </td>
+                    <td>
+                        <a sec:authorize="hasRole('user')" th:href="@{'/reclamer/acc/' + ${serviceAcceuil.id}}" class="btn btn-dark">Réclamer</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="container mt-4">
+    <nav>
+        <ul class="pagination">
+            <li th:classappend="${currentPage == 0} ? 'disabled'">
+                <a class="page-link" th:href="@{/listeapresvente(page=${currentPage - 1}, taille=${taille})}">Précédent</a>
+            </li>
+            <li th:each="pageNum : ${#numbers.sequence(0, totalPages - 1)}" th:classappend="${pageNum == currentPage} ? 'active'">
+                <a class="page-link" th:href="@{/listeapresvente(page=${pageNum}, taille=${taille})}" th:text="${pageNum + 1}"></a>
+            </li>
+            <li th:classappend="${currentPage == totalPages - 1} ? 'disabled'">
+                <a class="page-link" th:href="@{/listeapresvente(page=${currentPage + 1}, taille=${taille})}">Suivant</a>
+            </li>
+        </ul>
+    </nav>
+</div>
+</body>
+</html>

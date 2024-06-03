@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Liste des Maintenances</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/5.3.3/css/bootstrap.min.css">
+</head>
+<body>
+<nav class="navbar navbar-light" style="background-color: #0dcaf0;">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">Gestion des réclamations</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-link active" aria-current="page" href="/">Accueil</a>
+                <a class="nav-link" href="/listProduits">Produits</a>
+                <a class="nav-link" href="listservice">Service</a>
+                <a sec:authorize="hasRole('admin')" class="nav-link" href="/user">Utilisateur</a>
+
+                <a sec:authorize="hasRole('admin')" class="nav-link" href="/listeReclamations">Liste réclamations</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header">
+            Liste des Maintenances
+            <a th:href="@{/maintenance/new}" class="btn btn-outline-info float-end" sec:authorize="hasRole('admin')">Ajouter un nouveau</a>
+            <a th:href="@{/maintenance/new}" class="btn btn-outline-info float-end" sec:authorize="hasRole('user')">Si aucun champ ne vous convient ajoutez un</a>
+
+            <!--    <a class="btn btn-primary mb-3" href="/maintenance/new">Ajouter une maintenance</a>-->
+        </div>
+        <div class="card-body">
+            <table class="table">
+                <thead class="thead-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Probleme</th>
+                    <th>Site</th>
+                    <th sec:authorize="hasRole('admin')">Actions</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="maintenance : ${serviceAcceuils}">
+                    <td th:text="${maintenance.id}"></td>
+                    <td th:text="${maintenance.nom}"></td>
+                    <td th:text="${maintenance.responsable}"></td>
+                    <td sec:authorize="hasRole('admin')">
+                        <a class="btn btn-outline-success" th:href="@{/maintenance/edit/{id}(id=${maintenance.id})}">Modifier</a>
+                        <a class="btn btn-secondary" th:href="@{/maintenance/{id}(id=${maintenance.id})}"
+                           onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette maintenance ?')">Supprimer</a>
+                    </td>
+                    <td>
+                        <a th:href="@{'/reclamer/man/' + ${maintenance.id}}" class="btn btn-dark" sec:authorize="hasRole('user')">Réclamer</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <nav>
+                <ul class="pagination">
+                    <li th:classappend="${currentPage == 0} ? 'disabled'">
+                        <a class="page-link" th:href="@{/listemaintenance(page=${currentPage - 1}, taille=${taille})}">Précédent</a>
+                    </li>
+                    <li th:each="pageNum : ${#numbers.sequence(0, totalPages - 1)}" th:classappend="${pageNum == currentPage} ? 'active'">
+                        <a class="page-link" th:href="@{/listemaintenance(page=${pageNum}, taille=${taille})}" th:text="${pageNum + 1}"></a>
+                    </li>
+                    <li th:classappend="${currentPage == totalPages - 1} ? 'disabled'">
+                        <a class="page-link" th:href="@{/listemaintenance(page=${currentPage + 1}, taille=${taille})}">Suivant</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+    </div>
+</div>
+</body>
+</html>

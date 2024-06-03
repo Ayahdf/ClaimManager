@@ -6,6 +6,7 @@ import com.example.gestiondesreclamations.service.ProduitManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,8 +32,8 @@ public class ProduitService implements ProduitManager {
     public Produit miseajourProduit(Produit produit) {
         if (produit != null && produit.getIdProduit() !=null && produitDAO.existsById(produit.getIdProduit()))
         {
-        produitDAO.save(produit);
-        return produit;
+            produitDAO.save(produit);
+            return produit;
         }
 
         return null;
@@ -73,4 +74,11 @@ public class ProduitService implements ProduitManager {
     public Page<Produit> listeProduit2(int page, int taille) {
         return produitDAO.findAll(PageRequest.of(page, taille));
     }
+
+    @Override
+    public Page<Produit> getAllUser(String keyword, Pageable pageable) {
+        return produitDAO.findByNomContaining(keyword,pageable);
+    }
+
+
 }

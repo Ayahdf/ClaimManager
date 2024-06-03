@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -10,23 +11,35 @@
 <body>
 <nav class="navbar navbar-light" style="background-color: #0dcaf0;">
     <div class="container-fluid">
-        <a class="navbar-brand" href="/">Gestion des reclamations</a>
+        <a class="navbar-brand" href="/">Gestion des réclamations</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-                <a class="nav-link active" aria-current="page" href="/">Home</a>
+                <a class="nav-link active" aria-current="page" href="/">Accueil</a>
                 <a class="nav-link" href="/listProduits">Produits</a>
-                <a class="nav-link" href="/listeReclamations">Mes reclamations</a>
+                <a class="nav-link" href="listservice">Service</a>
+                <a sec:authorize="hasRole('admin')" class="nav-link" href="/user">Utilisateur</a>
+
+                <a sec:authorize="hasRole('admin')" class="nav-link" href="/listeReclamations">Liste réclamations</a>
             </div>
         </div>
-    </div></nav>
+    </div>
+</nav>
 <div class="container mt-4">
     <div class="card">
-        <div class="card-header">
+        <div class="card-header" >
             Liste des produits
-            <a href="/ajouterProduit" class="btn btn-outline-info float-end">Ajouter un produit</a>
+            <a sec:authorize="hasRole('admin')" href="/ajouterProduit" class="btn btn-outline-info float-end">Ajouter un produit</a>
+        </div>
+        <div class="col-md-8">
+            <form method="get" th:action="@{listProduits}">
+                <div class="input-group">
+                    <input type="text" name="search" th:value="${keyword}" placeholder="Recherche...">
+                    <button class="btn btn-primary" type="submit">Rechercher</button>
+                </div>
+            </form>
         </div>
         <div class="card-body">
             <table class="table">
@@ -45,13 +58,13 @@
                     <td th:text="${p.nom}"></td>
                     <td th:text="${p.description}"></td>
                     <td>
-                        <a th:href="@{'/modifierProduit/' + ${p.idProduit}}" class="btn btn-outline-dark">Modifier</a>
-                        <a th:href="@{'/deleteProduit/' + ${p.idProduit}}" class="btn btn-outline-danger">Supprimer</a>
+                        <a sec:authorize="hasRole('admin')" th:href="@{'/modifierProduit/' + ${p.idProduit}}" class="btn btn-outline-dark">Modifier</a>
+                        <a sec:authorize="hasRole('admin')" th:href="@{'/deleteProduit/' + ${p.idProduit}}" class="btn btn-outline-danger">Supprimer</a>
                         <a th:href="@{'/commentaires/' + ${p.idProduit}}" class="btn btn-outline-info">Commentaire</a>
                     </td>
                     <td>
-                        <a th:href="@{'/reclamer/' + ${p.idProduit}}" class="btn btn-dark">Reclamer</a>
-                        <a th:href="@{'/listeReclamations/' + ${p.idProduit}}" class="btn btn-secondary">Liste des réclamations</a>
+                        <a sec:authorize="hasRole('user')" th:href="@{'/reclamer/' + ${p.idProduit}}" class="btn btn-dark">Reclamer</a>
+                        <a sec:authorize="hasRole('admin')" th:href="@{'/listeReclamations'}" class="btn btn-secondary">Liste des réclamations</a>
 
                     </td>
 

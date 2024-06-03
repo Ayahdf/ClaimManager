@@ -27,7 +27,7 @@ public class Produit {
     @OneToMany(mappedBy = "produit")
     private List<Reclamation> reclamations;
     //association avec produit
-    @OneToMany(mappedBy = "produit")
+    @OneToMany(mappedBy = "produit", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Commentaire> commentaires;
 
 }

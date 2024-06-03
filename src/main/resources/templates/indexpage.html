@@ -1,28 +1,115 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Accueil - Gestion des Réclamations</title>
     <link rel="stylesheet" href="/webjars/bootstrap/5.3.3/css/bootstrap.min.css">
+    <style>
+        body {
+            background-image: url('https://venngage-wordpress.s3.amazonaws.com/uploads/2018/11/15-Presentation-Background-Examples16.jpeg'); /* Replace with your image URL */
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            color: #fff;
+        }
+        .navbar {
+            background-color: rgba(13, 202, 240, 0.9); /* Slightly transparent navbar */
+        }
+        .button-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+        .btn-custom {
+            width: 200px;
+            padding: 10px;
+            font-size: 1.2em;
+            margin: 10px;
+        }
+        .btn-primary-custom {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        .btn-secondary-custom {
+            background-color: #6c757d;
+            border-color: #6c757d;
+        }
+        .btn-primary-custom:hover, .btn-secondary-custom:hover {
+            opacity: 0.8;
+        }
+        .button-container {
+            padding: 20px;
+            background-color: #f8f9fa; /* Light background for contrast */
+            border-radius: 10px;       /* Rounded corners */
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+        }
+
+        .welcome-message {
+            color: #343a40; /* Dark color for the welcome message */
+            font-weight: bold;
+        }
+
+        .btn-custom {
+            padding: 10px 20px;
+            font-size: 1rem;
+            border-radius: 5px;
+        }
+
+        .btn-secondary-custom {
+            background-color: #6c757d;
+            color: white;
+        }
+
+        .btn-primary-custom {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-group .btn {
+            margin: 5px; /* Ensure buttons have some space around */
+        }
+
+    </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
 <nav class="navbar navbar-light" style="background-color: #0dcaf0;">
     <div class="container-fluid">
-        <a class="navbar-brand" href="/">Gestion des reclamations</a>
+        <a class="navbar-brand" href="/">Gestion des réclamations</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-                <a class="nav-link active" aria-current="page" href="/">Home</a>
+                <a class="nav-link active" aria-current="page" href="/">Accueil</a>
                 <a class="nav-link" href="/listProduits">Produits</a>
-                <a class="nav-link" href="/listeReclamations">Mes reclamations</a>
+                <a class="nav-link" href="listservice">Service</a>
+                <a sec:authorize="hasRole('admin')" class="nav-link" href="/user">Utilisateur</a>
+
+                <a sec:authorize="hasRole('admin')" class="nav-link" href="/listeReclamations">Liste réclamations</a>
             </div>
         </div>
-    </div></nav>
+    </div>
+</nav>
+
+<div class="button-container text-center my-4">
+    <h5 class="welcome-message mb-4">Bienvenue dans notre site de traitement des réclamations</h5>
+    <div class="btn-group">
+        <button class="btn btn-secondary btn-custom mx-2" onclick="location.href='/user/new'">Créer un compte</button>
+        <button class="btn btn-primary btn-custom mx-2" onclick="location.href='/login'">S'authentifier</button>
+        <button class="btn btn-secondary btn-custom mx-2" onclick="location.href='/reclamation'">Réclamation</button>
+    </div>
+</div>
 
 </body>
 </html>
-
